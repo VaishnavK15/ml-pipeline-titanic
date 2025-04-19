@@ -1,0 +1,49 @@
+Step I: 
+Create folder using mkdir ml-pipeline-titanic
+cd ml-pipeline-titanic
+
+Step II: Virtual environment
+python -m venv myenv
+myenv\Scripts\activate
+
+Step III: Create requirements.txt
+Add all necessary libraries into it
+pip install -r requirements.txt
+
+Step IV: Load, Preprocess the Titanic Dataset
+#Data PreProcessing:
+#Handle missing values
+df = df.dropna(subset=['age', 'embarked', 'sex'])
+
+# Encoding categorical variables
+df['sex'] = df['sex'].map({'male': 0, 'female': 1})
+df['embarked'] = df['embarked'].map({'C': 0, 'Q': 1, 'S': 2})
+
+# Select features and target variable
+X = df[['age', 'sibsp', 'parch', 'fare', 'sex', 'embarked']]
+y = df['survived']
+
+Step V: Train a Simple Model
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+x_train, y_train, x_test, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
+
+model = LogisticRegression()
+model.fit(x_train, y_train)
+
+y_pred = model.predict(x_test)
+
+accuracy = accuracy_score(y_test, y_pred)
+print("accuracy:", accuracy)
+
+Step VI: GitHub
+Open Git Bash terminal in VS Code
+cd ml-pipeline-titanic
+git init
+git add .
+git commit -m "Committed All Files with notebook"
+Go to GitHub, create repo with same name
+git remote add origin <url-of-repo>
+git push
